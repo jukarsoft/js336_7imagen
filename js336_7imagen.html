@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		* {
+			text-align: center;
+		}
+		img {
+			width: 800px;
+			height: 400px;
+			
+		}
+	</style>
+	<script>
+		var temporizador;
+		var imagenActual = 0;
+		var arrayImagenes = ['img/punta_cana_1.jpg','img/punta_cana_2.jpg','img/punta_cana_3.jpg','img/punta_cana_4.jpg','img/punta_cana_5.jpg','img/punta_cana_6.jpg'];
+		window.onload = function() {
+			//activar un listener sobre todo el documento
+			document.getElementById('anterior').addEventListener('click', averiguaBoton);
+			document.getElementById('siguiente').addEventListener('click', averiguaBoton);
+			document.getElementById('imagen').addEventListener('mouseover', pararTemporizador)
+			document.getElementById('imagen').addEventListener('mouseout', iniciarTemporizador)
+			//temporizador para cambiar las imagenes
+			//setTimeout(averiguaBoton, 3000);
+			//ejecuta la funcion cada 3 segundos
+			temporizador=setInterval(averiguaBoton, 2000);
+			
+		}
+
+		function averiguaBoton() {
+			//averiguar el boton pulsado
+			//alert(this.id)
+			var boton = this.id;
+			//alert(this.id)
+			if (boton!=undefined) {
+				clearInterval(temporizador);
+				temporizador=setInterval(averiguaBoton, 2000);
+			}				
+			if (boton == 'anterior' ) {
+				if (imagenActual>0) {
+					imagenActual--;
+					MostrarImagen();
+				}else {
+					imagenActual= arrayImagenes.length-1
+				}
+			}else {
+					if (imagenActual < arrayImagenes.length-1) {
+						imagenActual++;
+						MostrarImagen();
+					} else {
+						imagenActual=0;
+					}
+				
+			} 	
+		}
+		function MostrarImagen () {
+			document.getElementById('imagen').src=arrayImagenes[imagenActual];
+		}
+		function pararTemporizador () {
+			clearInterval(temporizador);
+		}
+		function iniciarTemporizador () {
+			temporizador=setInterval(averiguaBoton, 2000);
+		}
+	</script>
+</head>
+<body>
+		<p>Click en la imagen para cambiar</p>
+		<img id='imagen' src='img/punta_cana_1.jpg'>
+		<br>
+		<input type="button" name="" value="<<" id="anterior">
+		<input type="button" name="" value=">>" id="siguiente">
+		
+</body>
+</html>
